@@ -304,7 +304,7 @@
 					</div>
 				</div>
 				<div class="row products_row">
-                {% for item in items %}
+                {% for item in object_list %}
 					<!-- Product -->
 					<div class="col-xl-4 col-md-6">
 						<div class="product">
@@ -313,7 +313,7 @@
 								<div class="product_info d-flex flex-row align-items-start justify-content-start">
 									<div>
 										<div>
-											<div class="product_name"><a href="product.html">{{ item.tittle }}</a></div>
+											<div class="product_name"><a href="{{ item.get_absolute_url }}">{{ item.tittle }}</a></div>
 											<div class="product_category">{{ item.get_category_display }}</div>
                                             <spa class="badge badge-pill badge-{{ item.get_lable_display }}">NEW</spa>
 										</div>

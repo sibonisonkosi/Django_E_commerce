@@ -1,16 +1,11 @@
 from django.shortcuts import render
 from .models import Item, OrderItem, Order
+from django.views.generic import ListView, DetailView
 
-def default(request):
+class defaultView(ListView):
+    model = Item
+    template_name = 'my_app/index.html'
 
-    context = {
-        'items' : Item.objects.all()
-    }
-    return render(request, 'my_app/index.html', context)
-
-def item_list(request):
-
-    context = {
-        'items' : Item.objects.all()
-    }
-    return render(request, 'my_app/item_list.html', context)
+class ItemDetailView(DetailView):
+    model = Item
+    template_name = 'my_app/product.html'
