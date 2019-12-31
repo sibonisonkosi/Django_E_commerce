@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="home_container">
+     <div class="container">
+        <h2>Here is the list</h2>
+
+         {% for item in items %}
+         <ul>
+             <li>{{ item }}</li>
+         </ul>
+         {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
