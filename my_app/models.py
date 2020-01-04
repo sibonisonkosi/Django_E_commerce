@@ -17,9 +17,12 @@ LABEL_CHOICES = (
 class Item(models.Model):
     tittle = models.CharField(max_length=100)
     price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
     lable = models.CharField(choices=LABEL_CHOICES, max_length=1)
     slug = models.SlugField()
+    description = models.TextField()
+
 
     def __str__(self):
         return self.tittle
@@ -29,17 +32,24 @@ class Item(models.Model):
             'slug': self.slug
         })
 
-class OrderItem(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    def get_add_to_cart_url(self):
+        return reverse("my_app:add-to-cart", kwargs={
+            'slug': self.slug
+        })
 
+class OrderItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ordered = models.BooleanField(default=False)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
     def __str__(self):
-        return self.tittle
+        return f"{self.quantity} of {self.item.tittle}"
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete= models.CASCADE)
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
-    orderd_date = models.DateTimeField()
+    ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
 
 
